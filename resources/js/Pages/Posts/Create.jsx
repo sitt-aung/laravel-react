@@ -1,4 +1,5 @@
 import { Component } from "react";
+import CategoriesService from "../../Services/CategoriesService";
 
 class PostsCreate extends Component {
     constructor(props) {
@@ -8,6 +9,7 @@ class PostsCreate extends Component {
             title: "",
             content: "",
             category_id: "",
+            categories: [],
         };
 
         this.handleTitleChange = this.handleTitleChange.bind(this);
@@ -31,6 +33,11 @@ class PostsCreate extends Component {
     handleSubmit(event) {
         console.log(JSON.stringify(this.state));
         event.preventDefault();
+    }
+
+    componentDidMount() {
+        CategoriesService.getAll()
+            .then(response => this.setState({ categories: response.data.data }))
     }
 
     render() {
@@ -80,12 +87,18 @@ class PostsCreate extends Component {
                         className="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     >
                         <option value="">-- Select category --</option>
+                        {this.state.categories.map((category, index) => (
+                            <option key={index} value={category.id}>
+                                {category.name}
+                            </option>
+                        ))}
                     </select>
                 </div>
                 <div className="mt-4">
                     <button
                         type="submit"
-                        className="px-3 py-2 bg-blue-600 text-white rounded">
+                        className="px-3 py-2 bg-blue-600 text-white rounded"
+                    >
                         Save
                     </button>
                 </div>
