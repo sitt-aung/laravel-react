@@ -1,6 +1,7 @@
 import axios from "axios";
 import { Component } from "react";
 import CategoriesService from "../../Services/CategoriesService";
+import { Link } from "react-router-dom";
 
 class PostsIndex extends Component {
     constructor(props) {
@@ -59,6 +60,7 @@ class PostsIndex extends Component {
             <td>{ post.category.name }</td>
             <td>{ post.content }</td>
             <td>{ post.created_at }</td>
+            <td><Link to={`posts/edit/${post.id}`}>Edit</Link></td>
         </tr>);
     }
 
@@ -182,6 +184,7 @@ class PostsIndex extends Component {
                                         <span>Created at</span>
                                     </div>
                                 </th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody className="table-body">
