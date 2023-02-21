@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
-import PostsIndex from "../Pages/Posts";
+import PostsIndex from "../Pages/Posts/Index";
 import PostsCreate from "../Pages/Posts/Create";
 import PostsEdit from "../Pages/Posts/Edit";
 
