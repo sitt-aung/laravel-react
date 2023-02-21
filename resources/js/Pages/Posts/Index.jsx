@@ -3,6 +3,7 @@ import { Component } from "react";
 import CategoriesService from "../../Services/CategoriesService";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import _ from "lodash";
 
 class PostsIndex extends Component {
     constructor(props) {
@@ -52,6 +53,8 @@ class PostsIndex extends Component {
         );
     }
 
+    debounceFetchPosts = _.debounce(this.fetchPosts, 500);
+
     handleIdFilter(event) {
         this.setState(
             {
@@ -59,9 +62,10 @@ class PostsIndex extends Component {
                     id: event.target.value,
                     page: 1,
                 },
-            },
-            () => this.fetchPosts()
+            }
         );
+
+        this.debounceFetchPosts();
     }
 
     handleTitleFilter(event) {
@@ -71,9 +75,10 @@ class PostsIndex extends Component {
                     title: event.target.value,
                     page: 1,
                 },
-            },
-            () => this.fetchPosts()
+            }
         );
+
+        this.debounceFetchPosts();
     }
 
     handleCategoryFilter(event) {
@@ -83,9 +88,10 @@ class PostsIndex extends Component {
                     category_id: event.target.value,
                     page: 1,
                 },
-            },
-            () => this.fetchPosts()
+            }
         );
+
+        this.debounceFetchPosts();
     }
 
     handleContentFilter(event) {
@@ -96,8 +102,9 @@ class PostsIndex extends Component {
                     page: 1,
                 },
             },
-            () => this.fetchPosts()
         );
+
+        this.debounceFetchPosts();
     }
 
     handleGlobalFilter(event) {
@@ -107,9 +114,10 @@ class PostsIndex extends Component {
                     global: event.target.value,
                     page: 1,
                 },
-            },
-            () => this.fetchPosts()
+            }
         );
+
+        this.debounceFetchPosts();
     }
 
     componentDidMount() {
