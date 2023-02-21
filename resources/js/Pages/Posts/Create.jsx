@@ -15,6 +15,7 @@ class PostsCreate extends Component {
             title: "",
             content: "",
             category_id: "",
+            thumbnail: "",
             categories: [],
             errors: {},
             isLoading: false,
@@ -23,6 +24,7 @@ class PostsCreate extends Component {
         this.handleTitleChange = this.handleTitleChange.bind(this);
         this.handleContentChange = this.handleContentChange.bind(this);
         this.handleCategoryChange = this.handleCategoryChange.bind(this);
+        this.handleThumbnailChange = this.handleThumbnailChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -38,6 +40,10 @@ class PostsCreate extends Component {
         this.setState({ category_id: event.target.value });
     }
 
+    handleThumbnailChange(event) {
+        this.setState({ thumbnail: event.target.files[0] });
+    }
+
     handleSubmit(event) {
         event.preventDefault();
 
@@ -48,12 +54,14 @@ class PostsCreate extends Component {
             isLoading: true,
         });
 
+        let postData = new FormData();
+        postData.append('title', this.state.title);
+        postData.append('content', this.state.content);
+        postData.append('category_id', this.state.category_id);
+        postData.append('thumbnail', this.state.thumbnail);
+
         axios
-            .post("/api/posts", {
-                title: this.state.title,
-                content: this.state.content,
-                category_id: this.state.category_id,
-            })
+            .post("/api/posts", postData)
             .then((response) => this.props.navigate("/"))
             .catch((error) =>
                 this.setState({ errors: error.response.data.errors })
@@ -137,6 +145,16 @@ class PostsCreate extends Component {
                         ))}
                     </select>
                     { this.errorMessage('category_id') }
+                </div>
+                <div className="mt-4">
+                    <label
+                        htmlFor="thumbnail"
+                        className="block font-medium text-sm text-gray-700"
+                    >
+                        Thumbnail
+                    </label>
+                    <input type="file" id="thumbnail" onChange={this.handleThumbnailChange} />
+                    { this.errorMessage('thumbnail') }
                 </div>
                 <div className="mt-4">
                     <button

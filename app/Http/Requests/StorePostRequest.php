@@ -25,6 +25,7 @@ class StorePostRequest extends FormRequest
             'title' => 'required',
             'content' => 'required',
             'category_id' => 'required',
+            'thumbnail' => 'nullable|image',
         ];
     }
 
